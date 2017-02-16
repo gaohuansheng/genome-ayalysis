@@ -1,0 +1,43 @@
+{% extends "bootstrap/base.html" %}
+
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block head %}
+    {{ super() }}
+    <style>
+        body{
+            background-color: #222222;
+            color: #f5f5f5;
+        }
+        .center{
+            margin-top: 10%;
+        }
+        h2{
+            text-align: center;
+            font-size: 44px;
+            margin-bottom: 50px;
+        }
+        .form{
+            margin: 0 auto;
+        }
+        #email{
+            border-radius: 12px;
+        }
+        #psd{
+            border-radius: 12px;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid center">
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="col-md-4 form">
+                <h2>login for genome analysis</h2>
+                {{ wtf.quick_form(form) }}
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+    </div>
+{% endblock %}
