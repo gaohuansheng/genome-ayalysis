@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block head %}
+    {{ super() }}
+    {% block title %}Genome Login{% endblock %}
+{% endblock %}
+{% block content_page %}
+    <div class="panel panel">
+        <div class="panel-heading">
+            <div class="panel-title">Sign In</div>
+            <div class="jumps"><a href="{{ url_for("auth.password_reset_request") }}">Forgot password?</a></div>
+        </div>
+        <div style="padding-top:30px" class="panel-body">
+
+            <div style="display:none" id="login-alert" class="alert alert-danger col-sm-12"></div>
+
+            {{ wtf.quick_form(form) }}
+
+            {#        <p>Forgot your password? <a href="{{ url_for('auth.password_reset_request') }}">Click here to reset it</a>.</p>#}
+            {#        <p>New user? <a href="{{ url_for('auth.register') }}">Click here to register</a>.</p>#}
+        </div>
+        <div class="panel-footer">
+    {% for message in get_flashed_messages() %}
+            <div class="alert alert-info" style="position: absolute;top: 0px;">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            {{ message }}
+        {% endfor %}
+    </div>
+    </div>
+{% endblock %}
