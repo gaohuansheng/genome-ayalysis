@@ -19,11 +19,13 @@
             {#        <p>New user? <a href="{{ url_for('auth.register') }}">Click here to register</a>.</p>#}
         </div>
         <div class="panel-footer">
-    {% for message in get_flashed_messages() %}
-            <div class="alert alert-info" style="position: absolute;top: 0px;">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            {{ message }}
-        {% endfor %}
-    </div>
+            {% for message in get_flashed_messages() %}
+                <div class="alert alert-info">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                {{ message }}
+                </div>
+            {% endfor %}
+
+        </div>
     </div>
 {% endblock %}

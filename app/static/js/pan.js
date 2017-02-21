@@ -27,7 +27,7 @@ var scale;
 var edge_list=[];
 
 
-//力布局sadasdasdasdasdqwesaasda
+//力布局
 var simulation = d3.forceSimulation()
         .force("charge",d3.forceManyBody().strength(-1000))
         .force("link",d3.forceLink().id(function (d) {

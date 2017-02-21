@@ -4,8 +4,9 @@
 {% block head %}
     {{ super() }}
     <!--suppress ALL -->
-    <META HTTP-EQUIV="Pragma" CONTENT="no-cache">
-    <script src="//d3js.org/d3.v4.min.js"></script>
+    <script src="{{ url_for('static', filename="js/d3.min.js") }}"></script>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/genomes.ico') }}" type="image/x-icon">
+    <link rel="icon" href="{{ url_for('static', filename='img/genomes.ico') }}" type="image/x-icon">
     <link rel="stylesheet" href="{{ url_for('static',filename = "css/sidebar.css") }}">
     <link rel="stylesheet" href="{{ url_for('static',filename = "css/svg.css") }}">
 {% endblock %}
@@ -21,14 +22,21 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">Genom Analysis</a>
+                <a class="navbar-brand" href="/">Genome Analysis</a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="#">Dashboard</a></li>
-                    <li><a href="#">Settings</a></li>
-                    <li><a href="#">Profile</a></li>
                     <li><a href="#">Help</a></li>
+                    {% if current_user.is_authenticated %}
+                        <li><a href="{{ url_for('auth.logout') }}">Sign out</a></li>
+                    {% else %}
+                    <li><a href="{{ url_for('auth.register') }}">Sign up</a></li>
+                    <li><a href="{{ url_for('auth.login') }}">Login</a></li>
+                    {% endif %}
+
+
+
                 </ul>
                 <form class="navbar-form navbar-right">
                     <input type="text" class="form-control" placeholder="Search...">
@@ -123,6 +131,13 @@
             <li></li>
         </ul>
     </div>
+    <div style="text-align: center; position: absolute; top: 10px;">
+    {% for message in get_flashed_messages() %}
+        <div class="alert alert-info">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {{ message }}
+    {% endfor %}
+    </div>
 
 {% endblock %}
 
@@ -167,3 +182,19 @@
     </script>
     <script type="text/javascript" src="{{ url_for('static',filename='js/pan.js') }}"></script>
 {% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
