@@ -2,3 +2,6 @@
 *.so
 *.egg
 *.egg-info
+
+# Html
+*.xml
