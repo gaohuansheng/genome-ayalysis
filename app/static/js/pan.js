@@ -29,9 +29,9 @@ var edge_list=[];
 
 //力布局
 var simulation = d3.forceSimulation()
-        .force("charge",d3.forceManyBody().strength(-1000))
+        .force("charge",d3.forceManyBody().strength(-50))
         .force("link",d3.forceLink().id(function (d) {
-            return d.index
+            return d.id
         }))
         .force("x",d3.forceX(width/2))
         .force("y",d3.forceY(height/2));
@@ -40,7 +40,7 @@ simulation.force("charge")
 
 
 //导入文件
-d3.json("static/data/tax_1037410_cog.100.json",function (error,root) {
+d3.json("static/data/final_appjs_info.json",function (error,root) {
     //在控制台查看数据，方便调试
     console.log(root);
     if(error){
@@ -54,21 +54,19 @@ d3.json("static/data/tax_1037410_cog.100.json",function (error,root) {
     console.log(root.nodes);
     console.log(root.links);
 
-    //s
-
-    //定义缩放变量ddsd  dds  ddsdffsdfdsdfddddddddd的点点滴滴多
+    //定义缩放变量
     var zoom = d3.zoom()
         .scaleExtent([0.1, 8])
         .on("zoom",zoomed)
         .filter(filtered);
-    //绘制连线d
+    //绘制连线
     var svg_links = g.selectAll(".link")
         .data(root.links)
         .enter()
         .append("line")
         .attr("class","link")
-        .attr("stroke-width",function (d,i) {
-            return d.database*0.005;
+        .attr("stroke-width",function (d) {
+            return d.value;
         })
         .on("mouseover",edgeMouseOver)
         .on("mouseout",edgeMouseOut)
@@ -81,7 +79,9 @@ d3.json("static/data/tax_1037410_cog.100.json",function (error,root) {
         .enter()
         .append("circle")
         .attr("class","node")
-        .attr("r",5)
+        .attr("r", function (d) {
+            return Math.sqrt(d.weight)*3;
+        })
         .attr("fill",function (d,i) {
             return colors(i);
         })
@@ -97,13 +97,12 @@ d3.json("static/data/tax_1037410_cog.100.json",function (error,root) {
         .enter()
         .append("text")
         .attr("class","text")
-        .attr("dx",20)
+        .attr("dx",0)
         .attr("dy",6)
         .text(function (d) {
             return d.id;
         })
         .attr("opacity",1);
-    $(".text").hide();
 
     //动态计算坐标，动起来
     simulation.on("tick",function () {
@@ -120,7 +119,7 @@ d3.json("static/data/tax_1037410_cog.100.json",function (error,root) {
                 return d.target.y;
             });
         svg_nodes.attr("cx",function (d) {
-            return d.x;
+                return d.x;
         })
             .attr("cy",function (d) {
                 return d.y;
@@ -133,6 +132,7 @@ d3.json("static/data/tax_1037410_cog.100.json",function (error,root) {
             })
 
     });
+    $(".text").hide();
 
     //整体缩放拖拽事件
     function zoomed() {
@@ -225,17 +225,7 @@ d3.json("static/data/tax_1037410_cog.100.json",function (error,root) {
 
 
     //Statistic
-    d3.select("#totalNodes").text(root.nodes.length);
-    d3.select("#activeNodes").text(function () {
-        var count = 0;
-        for (i=0;i<root.nodes.length;i++){
-            if (root.nodes[i].weight >= 30){
-                count++
-            }
-        }
-        return count;
-    });
-    d3.select("#inactiveNodes").text(d3.select("#totalNodes").text()-d3.select("#activeNodes").text());
+
 
     //Filter
     $("#toggleNodes").on("click",function(){
@@ -258,6 +248,33 @@ d3.json("static/data/tax_1037410_cog.100.json",function (error,root) {
         .duration(750)
         .call(zoom.transform, d3.zoomIdentity);
     }
+
+    //filter
+    $("#weightControl").change(function () {
+        weight = $("#weightControl").val();
+        svg_nodes.attr("class",function (d) {
+            if (d.weight<weight){
+                return "hide"
+            }
+            else
+                return "show"
+        });
+        svg_links.attr("class", function (d) {
+            if (d.source.weight<weight || d.target.weight<weight){
+                return "hide link"
+            }
+            else
+                return "show link"
+        })
+        svg_texts.attr("class",function (d) {
+            if (d.weight<weight){
+                return "hide text"
+            }
+            else
+                return "show text"
+        });
+    });
+
 
 
 
@@ -326,8 +343,8 @@ d3.json("static/data/tax_1037410_cog.100.json",function (error,root) {
              var Message = $(".message");
              Message.show();
             $($(".message li")[0]).text("id : " + d3.select(this)._groups[0][0].__data__.id);
-            $($(".message li")[1]).text("annotation : "+d3.select(this)._groups[0][0].__data__.annotation);
-            $($(".message li")[2]).text("strain : "+d3.select(this)._groups[0][0].__data__.strain);
+            $($(".message li")[1]).text("weight : "+d3.select(this)._groups[0][0].__data__.weight);
+            $($(".message li")[2]).text("group : "+d3.select(this)._groups[0][0].__data__.group);
         }
     }
 

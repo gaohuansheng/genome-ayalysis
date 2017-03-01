@@ -102,34 +102,3 @@ function dragended(d) {
     d.fy = null;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -17,8 +17,9 @@
 }
 .text{
     stroke: #ffffff;
-    stroke-width: 1px;
+    stroke-width: 0.8px;
     fill: #ffffff;
+    font-size: 14px;
 }
 
 .selected{

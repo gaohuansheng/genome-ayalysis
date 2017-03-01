@@ -10,13 +10,8 @@
             <div class="jumps"><a href="{{ url_for("auth.password_reset_request") }}">Forgot password?</a></div>
         </div>
         <div style="padding-top:30px" class="panel-body">
-
             <div style="display:none" id="login-alert" class="alert alert-danger col-sm-12"></div>
-
             {{ wtf.quick_form(form) }}
-
-            {#        <p>Forgot your password? <a href="{{ url_for('auth.password_reset_request') }}">Click here to reset it</a>.</p>#}
-            {#        <p>New user? <a href="{{ url_for('auth.register') }}">Click here to register</a>.</p>#}
         </div>
         <div class="panel-footer">
             {% for message in get_flashed_messages() %}
@@ -25,7 +20,6 @@
                 {{ message }}
                 </div>
             {% endfor %}
-
         </div>
     </div>
 {% endblock %}

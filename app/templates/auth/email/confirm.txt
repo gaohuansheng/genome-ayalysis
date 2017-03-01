@@ -1,4 +1,4 @@
-Hello {{ user.username }}
+Hello {{ user.username }},
 Please click follow URI to confirm your account
 {{ url_for('auth.confirm', token=token, _external=True) }}
 
