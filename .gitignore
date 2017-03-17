@@ -2,6 +2,12 @@
 *.so
 *.egg
 *.egg-info
+*.pyc
 
 # Html
 *.xml
+
+# Files
+flask
+app/__pycache__
+__pycache__/*

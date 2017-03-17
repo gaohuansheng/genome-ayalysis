@@ -32,9 +32,9 @@ class RegisterForm(FlaskForm):
 
 class ChangePasswordForm(FlaskForm):
     old_password = PasswordField('', validators=[DataRequired()], render_kw={"placeholder": "Old password"})
-    password = PasswordField('New password', validators=[
+    password = PasswordField('', validators=[
         DataRequired(), EqualTo('password2', message='Passwords must match')], render_kw={"placeholder": "Confirmed password"})
-    password2 = PasswordField('Confirm new password', validators=[DataRequired()], render_kw={"placeholder": "New password"})
+    password2 = PasswordField('', validators=[DataRequired()], render_kw={"placeholder": "New password"})
     submit = SubmitField('Update Password')
 
 
@@ -57,19 +57,6 @@ class PasswordResetForm(FlaskForm):
         if User.query.filter_by(email=field.data).first() is None:
             raise ValidationError('Unknown email address.')
 
-from wtforms.validators import DataRequired, Length, Email
 
-class LoginForm(FlaskForm):
-    email = StringField('Email:', validators=[DataRequired(), Email()], id='email',)
-    password = PasswordField('Password:', validators=[DataRequired(), Length(8, 64)], id='psd')
-    rem = BooleanField('Remember me')
-    submit = SubmitField('Submit', id='submit')
-
-class RegisterForm(FlaskForm):
-    username = StringField('Username', validators=[DataRequired()])
-    email = StringField('Email', validators=[DataRequired(), Email()])
-    password = PasswordField('Password', validators=[DataRequired()])
-    confirm_psd = PasswordField('Confirmed password', validators=[DataRequired()])
-    register = SubmitField('Register')
 
 

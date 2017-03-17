@@ -4,7 +4,8 @@
 {% block head %}
     {{ super() }}
     <!--suppress ALL -->
-    <script src="{{ url_for('static', filename="js/d3.min.js") }}"></script>
+    <script src="{{ url_for('static', filename='bower_components/react/react.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='bower_components/d3/d3.min.js') }}"></script>
     <link rel="shortcut icon" href="{{ url_for('static', filename='img/genomes.ico') }}" type="image/x-icon">
     <link rel="icon" href="{{ url_for('static', filename='img/genomes.ico') }}" type="image/x-icon">
     <link rel="stylesheet" href="{{ url_for('static',filename = "css/sidebar.css") }}">
@@ -144,8 +145,6 @@
     </div>
 
 {% endblock %}
-
-
 {% block scripts %}
     {{ super() }}
     <script>

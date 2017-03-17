@@ -95,7 +95,7 @@ def change_password():
             return redirect(url_for('main.index'))
         else:
             flash('Invalid password.')
-    return render_template("auth/.html", form=form)
+    return render_template("auth/change_password.html", form=form)
 
 # 给忘记密码的人重设密码，需要邮箱确认
 @auth.route('/reset', methods=['GET', 'POST'])

@@ -1,0 +1,45 @@
+{
+  "name": "hsgao",
+  "version": "1.0.0",
+  "description": "a genome analysis web app,using flask and d3",
+  "main": "manager.py",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "python manager.py"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gaohuansheng/genome-ayalysis.git"
+  },
+  "keywords": [
+    "flask",
+    "genome",
+    "analysis",
+    "d3",
+    "react",
+    "bootstrap"
+  ],
+  "author": "hsgao",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gaohuansheng/genome-ayalysis/issues"
+  },
+  "homepage": "https://github.com/gaohuansheng/genome-ayalysis#readme",
+  "dependencies": {
+    "bower": "^1.8.0",
+    "d3": "^4.7.3",
+    "react-bootstrap": "^0.30.8"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-browser": "^2.1.4",
+    "gulp-size": "^2.1.0",
+    "jquery": "^2.1.4",
+    "bootstrap": "^3.3.6",
+    "del": "^2.2.0",
+    "reactify": "^1.1.1",
+    "react": "^15.1.0"
+  }
+}
