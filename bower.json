@@ -28,7 +28,7 @@
     "bootstrap": "^3.3.6",
     "d3": "^4.7.3",
     "react": "^15.1.0",
-    "react-bootstrap": "^0.30.8"
+    "react-bootstrap": "^0.30.8",
+    "underscore": "^1.8.3"
   }
-
 }

@@ -29,18 +29,17 @@ var edge_list=[];
 
 //力布局
 var simulation = d3.forceSimulation()
-        .force("charge",d3.forceManyBody().strength(-50))
+        .force("charge",d3.forceManyBody().strength(-120))
         .force("link",d3.forceLink().id(function (d) {
-            return d.id
+            return d.index
         }))
         .force("x",d3.forceX(width/2))
         .force("y",d3.forceY(height/2));
-simulation.force("charge")
-    .distanceMax(500);
+simulation.force("link").distance(30);
 
 
 //导入文件
-d3.json("static/data/final_appjs_info.json",function (error,root) {
+d3.json("static/data/tda.json",function (error,root) {
     //在控制台查看数据，方便调试
     console.log(root);
     if(error){
@@ -73,18 +72,21 @@ d3.json("static/data/final_appjs_info.json",function (error,root) {
         .on("click",edgeClick);
 
     //绘制节点
-    var colors = d3.scaleOrdinal(d3.schemeCategory20);
+        var colors = d3.scaleOrdinal()
+        .domain(["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30"])
+        .range(["#FF0000", "#FF1400", "#FF2800", "#FF3c00", "#FF5000", "#FF6400", "#FF7800", "#FF8c00", "#FFa000", "#FFb400", "#FFc800", "#FFdc00", "#FFf000", "#fdff00", "#b0ff00", "#65ff00", "#17ff00", "#00ff36", "#00ff83", "#00ffd0", "#00e4ff", "#00c4ff", "#00a4ff", "#00a4ff", "#0084ff", "#0064ff", "#0044ff", "#0022ff", "#0002ff", "#0100ff", "#0300ff", "#0500ff"]);
     var svg_nodes = g.selectAll(".node")
         .data(root.nodes)
         .enter()
         .append("circle")
         .attr("class","node")
         .attr("r", function (d) {
-            return Math.sqrt(d.weight)*3;
+            return d.group;
         })
-        .attr("fill",function (d,i) {
-            return colors(i);
+        .attr("fill",function (d) {
+            return colors(d.color);
         })
+        .style("box-shadow")
         .on("dblclick",nodeFixed)
         .call(d3.drag()
             .on("start", dragstarted)
