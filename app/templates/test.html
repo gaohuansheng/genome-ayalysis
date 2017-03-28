@@ -1,0 +1,281 @@
+<meta name="generator" content="KeplerMapper">
+<title>CK: weigthed unifrac MDS-2D KeplerMapper | KeplerMapper</title>
+{#<link href='https://fonts.googleapis.com/css?family=Roboto:700,300' rel='stylesheet' type='text/css'>#}
+<link rel="stylesheet" href="{{ url_for('static', filename='bower_components/bootstrap/dist/css/bootstrap.min.css') }}">
+<script src="{{ url_for('static', filename='bower_components/jquery/dist/jquery.min.js') }}"></script>
+<script src="{{ url_for('static', filename='bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+<script src="{{ url_for('static', filename='bower_components/underscore/underscore-min.js') }}"></script>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        text-decoration: none;
+    }
+
+    html {
+        height: 100%;
+    }
+
+    body {
+        background: #111;
+        font: 100 16px Roboto, Sans-serif;
+    }
+
+    .link {
+        stroke: #999;
+        stroke-opacity: .333;
+    }
+
+    .divs div {
+        border-radius: 50%;
+        background: red;
+        position: absolute;
+    }
+
+    .divs {
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+    #holder {
+        height: 100%;
+        background: #111;
+        display: block;
+    }
+
+    h1 {
+        padding: 20px;
+        color: #fafafa;
+        text-shadow: 0px 1px #000, 0px -1px #000;
+        position: absolute;
+        font: 300 30px Roboto, Sans-serif;
+    }
+
+    h2 {
+        text-shadow: 0px 1px #000, 0px -1px #000;
+        font: 700 16px Roboto, Sans-serif;
+    }
+
+    .meta {
+        opacity: 0.9;
+        width: 220px;
+        top: 80px;
+        left: 20px;
+        display: block;
+        background: #000;
+        line-height: 25px;
+        color: #fafafa;
+        border: 20px solid #000;
+        font: 100 16px Roboto, Sans-serif;
+    }
+
+    div.tooltip {
+        position: absolute;
+        width: 380px;
+        display: block;
+        padding: 20px;
+        background: #000;
+        border: 0px;
+        border-radius: 3px;
+        pointer-events: none;
+        z-index: 999;
+        color: #FAFAFA;
+    }
+
+    .filter {
+        padding-left: 20px;
+        color: #000;
+        font-weight: 700;
+        border-radius: 5px;
+        margin-top:8px;
+    }
+
+    .filter:hover {
+        cursor: pointer;
+    }
+
+    .condition {
+        padding-left: 10px;
+        font-weight: 100;
+    }
+
+    .list {
+        max-height: 200px;
+        overflow: auto;
+    }
+
+
+</style>
+<nav class="navbar navbar-inverse" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Genome Analysis</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#">Dashboard</a></li>
+                <li><a href="#">Help</a></li>
+                {% if current_user.is_authenticated %}
+                    <li><a href="{{ url_for('auth.logout') }}">Sign out</a></li>
+                {% else %}
+                    <li><a href="{{ url_for('auth.register') }}">Sign up</a></li>
+                    <li><a href="{{ url_for('auth.login') }}">Login</a></li>
+                {% endif %}
+            </ul>
+            <form class="navbar-form navbar-right">
+                <input type="text" class="form-control" placeholder="Search...">
+            </form>
+        </div>
+    </div>
+</nav>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-2 col-lg-2 col-sm-0">
+            <div class="panel-group" id="accordion1" role="tablist" aria-multiselectable="true">
+                <div class="panel panel-inverse">
+                    <div class="panel-heading" role="tab" id="headingOne">
+                        <h4 class="panel-title">
+                            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne"
+                               aria-expanded="true" aria-controls="collapseOne">
+                                Search nodes
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel"
+                         aria-labelledby="headingOne">
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="search_nodes" placeholder="nodes">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-inverse">
+                    <div class="panel-heading" role="tab" id="headingTwo">
+                        <h4 class="panel-title">
+                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion"
+                               href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                Parameters
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                        <div class="panel-body">
+                            <p class="meta">
+                                <b>Lens</b><br>weigthed unifrac MDS-2D<br><br>
+                                <b>Cubes per dimension</b><br>10<br><br>
+                                <b>Overlap percentage</b><br>40.0%<br><br>
+                                <b>Color Function</b><br>( weigthed unifrac MDS-2D )<br><br>
+                                <b>Clusterer</b><br>DBSCAN(algorithm='auto', eps=0.5, leaf_size=30, metric='euclidean',
+                                min_samples=3, n_jobs=1, p=None)<br><br>
+                                <b>Scaler</b><br>MinMaxScaler(copy=True, feature_range=(0, 1))
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-inverse">
+                    <div class="panel-heading" role="tab" id="headingThree">
+                        <h4 class="panel-title">
+                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion"
+                               href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                Filters
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapseThree" class="panel-collapse collapse" role="tabpanel"
+                         aria-labelledby="headingThree">
+                        <div class="panel-body" id="filters">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8 col-lg-8 col-sm-12" id="holder">
+        </div>
+        <div class="col-md-2 col-lg-2 col-sm-0">
+            <div class="panel-group" id="accordion2" role="tablist" aria-multiselectable="true">
+                <div class="panel panel-inverse">
+                    <div class="panel-heading" role="tab" id="NodeList">
+                        <h4 class="panel-title">
+                            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseNode"
+                               aria-expanded="true" aria-controls="collapseNode">
+                                Node
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapseNode" class="panel-collapse collapse in" role="tabpanel"
+                         aria-labelledby="NodeList">
+                        <div class="panel-body">
+                            <div class="form-group" id="nodeStatics">
+                                <ul class="list-group">
+                                    <li class="list-group-item list-group-item-info">
+                                        <span class="badge" id="allNodes"></span>
+                                        All Nodes:
+                                    </li>
+                                    <li class="list-group-item list-group-item-info">
+                                        <span class="badge" id="selectedNodes">11</span>
+                                        Selected Nodes:
+                                    </li>
+                                    <li class="list-group-item list-group-item-info">
+                                        <span class="badge" id="allSamples"></span>
+                                        All Samples:
+                                    </li>
+                                    <li class="list-group-item list-group-item-info">
+                                        <span class="badge" id="selectedSamples"></span>
+                                        Selected Samples:
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-inverse">
+                    <div class="panel-heading" role="tab" id="ColorList">
+                        <h4 class="panel-title">
+                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion"
+                               href="#collapseColor" aria-expanded="false" aria-controls="collapseColor">
+                                Color
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapseColor" class="panel-collapse collapse" role="tabpanel" aria-labelledby="ColorList">
+                        <div class="panel-body" id="color">
+                            <div class="list-group">
+                                <li href="#" class="list-group-item list-group-item-info" id="worked">Default</li>
+                                <hr>
+                                <a class="list-group-item" type="button" href="#" id="default">Default</a>
+                                <a class="list-group-item" type="button" href="#" id="pct-of-select">Pct-of-select</a>
+                                <a class="list-group-item" type="button" href="#" id="num-of-select">Num-of-select</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
+<script src="{{ url_for('static', filename="js/draw.js") }}"></script>
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,27 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>无标题</title>
+    <script src="jquery.js"></script>
+</head>
+<body>
+<div class="wrap">
+    总金额<input maxlength="8">元
+
+</div>
+<div class="tooltip">
+    <p class="hide">input must be a number</p>
+</div>
+<!-- /.tooltip -->
+<script type="text/javascript">
+
+    $("input").keyup(function () {
+        var re = /^\d{1,6}\.*\d{0,2}/;
+        if (re.test($(this).val()) === false){
+            $(this).show()
+        }
+    })
+
+</script>
+</body>
+</html>
