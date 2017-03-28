@@ -11,5 +11,5 @@
 flask
 app/__pycache__
 __pycache__/*
-node_modules
-__pycache__
+node_modules/*
+__pycache__/*
