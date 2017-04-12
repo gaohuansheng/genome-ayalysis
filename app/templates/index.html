@@ -8,33 +8,18 @@
     <script src="{{ url_for('static', filename='bower_components/browser/browser.min.js') }}"></script>
     <script src="{{ url_for('static', filename='bower_components/jquery/dist/jquery.min.js') }}"></script>
     <script src="{{ url_for('static', filename='bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
-    <link rel="{{ url_for('static', filename='bower_components/bootstrap/dist/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='bower_components/bootstrap/dist/css/bootstrap.min.css') }}">
 </head>
 <body>
-<div class="container-fluid">
-    <div class="header"></div>
-    <div class="container"></div>
-    <div id="example"></div>
+<div style="margin: 500px">
+    <p><button></button></p><button>按钮</button>
+    <br>
+    <br>
+    <button class="btn btn-danger">按钮</button>
 </div>
-<script type="text/babel">
-    var data = 123;
-    var Title = React.createClass({
-        propTypes: {
-            title: React.PropTypes.string.isRequired,
-        },
-
-        render: function(){
-            return <h1></h1>
-        }
-    })
-</script>
+<script type="text/babel" src="{{ url_for('static', filename="js/components/header.js") }}"></script>
 </body>
 </html>
-
-
-
-
-
 
 
 

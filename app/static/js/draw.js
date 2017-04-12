@@ -568,7 +568,7 @@ var node = divs.selectAll('div')
         return color(d.color)
     })
     .style("box-shadow", function (d) {
-        return '0px 0px 35px 2px' + color(d.color);
+        return '0px 0px 30px 2px' + color(d.color);
     })
     .on("mouseover", function (d) {
         div.transition()
@@ -631,10 +631,10 @@ $("#search_nodes").change(function () {
         node.style("background", function (d) {
             if (node_index.indexOf(d.index) !== -1) {
                 if (color === color1){
-                    return color(1);
+                    return color(d.color);
                 }
                 if (color === color2){
-                    return color(1/color_list[d.index])
+                    return color(sample_count[d.index]/color_list[d.index])
                 }
             }
             else {
@@ -686,6 +686,44 @@ $(function () {
     // Reset事件
     $("#reset").on("click", function () {
         $("input[type=checkbox]:checked").prop("checked", '');
+        sample_count = {
+            0: 7,
+            1: 8,
+            2: 3,
+            3: 3,
+            4: 5,
+            5: 3,
+            6: 7,
+            7: 3,
+            8: 3,
+            9: 4,
+            10: 4,
+            11: 4,
+            12: 4,
+            13: 3,
+            14: 4,
+            15: 6,
+            16: 3,
+            17: 8,
+            18: 4,
+            19: 3,
+            20: 5,
+            21: 3,
+            22: 7,
+            23: 6,
+            24: 5,
+            25: 6,
+            26: 6,
+            27: 4,
+            28: 5,
+            29: 3,
+            30: 4,
+            31: 7,
+            32: 8,
+            33: 4,
+            34: 4,
+            35: 6
+        };
         node.style("opacity", 0.9)
             .style("background", function (d) {
                 if (color === color1){
